@@ -73,15 +73,19 @@ class BookFlow(Flow[BookState]):
             chapter = Chapter(title=title, content=content)
             return chapter
 
-        for chapter_outline in self.state.book_outline:
-            print(f"Writing Chapter: {chapter_outline.title}")
+        chapters = []
+
+        for (index, chapter_outline) in enumerate(self.state.book_outline):
+            print(f"Writing Chapter {index + 1} of {len(self.state.book_outline)}: {chapter_outline.title}")
             print(f"Description: {chapter_outline.description}")
             # Schedule each chapter writing task
-            task = asyncio.create_task(write_single_chapter(chapter_outline))
-            tasks.append(task)
+            # task = asyncio.create_task(write_single_chapter(chapter_outline))
+            # tasks.append(task)
+            chapter = await write_single_chapter(chapter_outline)
+            chapters.append(chapter)
 
         # Await all chapter writing tasks concurrently
-        chapters = await asyncio.gather(*tasks)
+        # chapters = await asyncio.gather(*tasks)
         print("Newly generated chapters:", chapters)
         self.state.book.extend(chapters)
 
