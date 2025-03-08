@@ -25,6 +25,7 @@ class WriteBookChapterCrew:
         return Agent(
             config=self.agents_config["researcher"],
             tools=[search_tool],
+            max_iter=5,
             llm=self.tool_llm,
         )
 
@@ -32,6 +33,7 @@ class WriteBookChapterCrew:
     def writer(self) -> Agent:
         return Agent(
             config=self.agents_config["writer"],
+            max_iter=3,
             llm=self.llm,
         )
 

@@ -23,6 +23,7 @@ class OutlineCrew:
         search_tool = SearchTool()
         return Agent(
             config=self.agents_config["researcher"],
+            max_iter=5,
             tools=[search_tool],
             llm=self.tool_llm,
             verbose=True,
@@ -33,6 +34,7 @@ class OutlineCrew:
         return Agent(
             config=self.agents_config["outliner"],
             llm=self.llm,
+            max_iter=10,
             verbose=True,
         )
 
